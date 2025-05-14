@@ -22,6 +22,8 @@ client.on('messageCreate', message => {
     message.reply('⚠️ ATTENTION @everyone this guy need help from you! 🧑‍✈️');
   } else if (content === 'bye') {
   message.reply('Goodbye! See you later! 👋');
+  } else if (content === 'dee myre') {
+  message.reply('podaa pundachi mone👊');
   }
 });
 
