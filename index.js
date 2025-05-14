@@ -29,9 +29,10 @@ client.on('messageCreate', message => {
 
 client.on('messageCreate', async message => {
   if (message.content.startsWith('!clear')) {
-    // Only allow users with Manage Messages permission
-    if (!message.member.permissions.has('ManageMessages')) {
-      return message.reply("You don't have permission to use this command.");
+    // Only allow you (madboy_0079) to use the command
+    const ownerId = '1354501822429265921';
+    if (message.author.id !== ownerId) {
+      return message.reply("Only the bot owner can use this command.");
     }
 
     const user = message.mentions.users.first();
