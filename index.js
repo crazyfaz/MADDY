@@ -20,8 +20,8 @@ client.on('messageCreate', message => {
     message.reply('Hello🥰!');
   } else if (content === 'help') {
     message.reply('⚠️ ATTENTION @everyone this guy need help from you! 🧑‍✈️');
-  } else if (content === 'Bye') {
-    message.reply('Bye byeee, take care');
+  } else if (content === 'bye') {
+  message.reply('Goodbye! See you later! 👋');
   }
 });
 
