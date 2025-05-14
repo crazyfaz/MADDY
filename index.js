@@ -27,6 +27,30 @@ client.on('messageCreate', message => {
   }
 });
 
+client.on('messageCreate', async message => {
+  if (message.content.startsWith('!clear')) {
+    // Only allow users with Manage Messages permission
+    if (!message.member.permissions.has('ManageMessages')) {
+      return message.reply("You don't have permission to use this command.");
+    }
+
+    const user = message.mentions.users.first();
+    if (!user) {
+      return message.reply('Please mention a user to delete their messages.');
+    }
+
+    try {
+      const messages = await message.channel.messages.fetch({ limit: 100 });
+      const userMessages = messages.filter(msg => msg.author.id === user.id);
+      const deleted = await message.channel.bulkDelete(userMessages, true);
+      message.reply(`Deleted ${deleted.size} messages from ${user.tag}`);
+    } catch (err) {
+      console.error(err);
+      message.reply('Failed to delete messages. Note: Messages older than 14 days cannot be deleted.');
+    }
+  }
+});
+
 client.login(process.env.TOKEN);
 
 const http = require('http');
