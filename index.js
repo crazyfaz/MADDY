@@ -16,4 +16,4 @@ client.on('messageCreate', message => {
 });
 
 // Use token from .env
-client.login(process.env.TOKEN);￼Enter
+client.login(process.env.TOKEN);
