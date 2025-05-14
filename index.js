@@ -16,7 +16,7 @@ const client = new Client({
 });
 
 client.once('ready', () => {
-  console.log(`Logged in as ${client.user.tag}`);
+  console.log(`Logged in as Ｍ ΛＤＤƳ 亗#${client.user.discriminator}`);
 });
 
 client.on('messageCreate', message => {
