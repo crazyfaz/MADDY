@@ -11,7 +11,13 @@ client.on('ready', () => {
 
 client.on('messageCreate', message => {
   if (message.content.toLowerCase() === 'Hi') {
-    message.reply('Hello!');
+    message.reply('Hello🤗!');
+  }
+});
+
+client.on('messageCreate', message => {
+  if (message.content.toLowerCase() === 'Help') {
+    message.reply('📣ATTENTION @everyone this guy need help from you !🫵');
   }
 });
 
