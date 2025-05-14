@@ -21,7 +21,7 @@ client.on('messageCreate', message => {
   } else if (content === 'help') {
     message.reply('⚠️ ATTENTION @everyone this guy need help from you! 🧑‍✈️');
   } else if (content === 'Bye') {
-    message.reply('Bye byeee🤗 take care❤️');
+    message.reply('Bye byeee, take care');
   }
 });
 
