@@ -15,23 +15,6 @@ client.on('messageCreate', message => {
   }
 });
 
-if(message.author.bot)return;
-
-if(message.content === 'Thanks'){
-message.reply('You are welcome 🤗');}
-
-if(message.author.bot)return;
-
-if(message.content === 'Who made you'){
-message.reply('You should know that bitch crazy😂');}
-
-if(message.author.bot)return;
-
-if(message.content === 'Help'){
-message.reply('Attention @everyone this guy need help from you📣
-
-');}
-
 // Use token from .env
 client.login(process.env.TOKEN);
 
