@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => res.send('Bot is running!'));
-app.listen(3000, () => console.log('Keep-alive server started on port 3000'));
+app.listen(process.env.PORT || 3000, () => console.log('Keep-alive server started on port 3000'));
 
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
@@ -103,10 +103,3 @@ client.on('messageCreate', async message => {
 });
 
 client.login(process.env.TOKEN);
-
-// Keep-alive HTTP server for Replit
-const http = require('http');
-http.createServer((req, res) => {
-  res.write('Bot is running!');
-  res.end();
-}).listen(process.env.PORT || 3000);
