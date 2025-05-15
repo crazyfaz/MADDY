@@ -16,6 +16,9 @@ const client = new Client({
   ]
 });
 
+// Keep track of messages the bot already replied to
+const repliedMessages = new Set();
+
 // Target channel for commands
 const TARGET_CHANNEL_ID = '1367900838307303577';
 // Welcome channel
@@ -44,6 +47,12 @@ client.on('messageCreate', async message => {
 
   // Ignore messages in welcome channel
   if (message.channel.id !== TARGET_CHANNEL_ID || message.channel.id === WELCOME_CHANNEL_ID) return;
+
+  // Prevent replying twice to the same message
+  if (repliedMessages.has(message.id)) return;
+  repliedMessages.add(message.id);
+  // Optional: cleanup to save memory after 5 mins
+  setTimeout(() => repliedMessages.delete(message.id), 5 * 60 * 1000);
 
   const content = message.content.toLowerCase();
 
