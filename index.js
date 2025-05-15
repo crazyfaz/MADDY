@@ -41,6 +41,32 @@ client.on('messageCreate', async message => {
     return message.reply('podaa pundachi mone👊');
   }
 
+  // Time-based greetings logic
+  if (content.includes('good morning') || content.includes('good evening') || content.includes('good night')) {
+    const now = new Date();
+    // Kerala (IST) offset: UTC +5:30
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const istTime = new Date(now.getTime() + istOffset);
+    const hour = istTime.getUTCHours();
+
+    let reply = null;
+
+    if (content.includes('good morning')) {
+      if (hour >= 0 && hour < 12) reply = 'Good morning';
+      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+    } else if (content.includes('good evening')) {
+      if (hour >= 12 && hour < 19) reply = 'Good evening';
+      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+    } else if (content.includes('good night')) {
+      if (hour >= 19 && hour <= 23) reply = 'Good night';
+      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+    }
+
+    if (reply) {
+      return message.reply(reply);
+    }
+  }
+
   // Clear command
   if (message.content.startsWith('Delete')) {
     const ownerId = '1354501822429265921';
