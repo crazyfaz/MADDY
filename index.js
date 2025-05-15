@@ -23,28 +23,27 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-  if (message.author.bot) return; // ignore bots
+  if (message.author.bot) return;
 
-  // Only work if message is in the specific channel
+  // Only respond in target channel
   if (message.channel.id !== TARGET_CHANNEL_ID) return;
 
   const content = message.content.toLowerCase();
 
-  // Simple text replies
-  if (content === 'hi') {
-    return message.reply('Hello🥰!');
-  } else if (content === 'help') {
-    return message.reply('⚠️ ATTENTION @everyone this guy need help from you! 🧑‍✈️');
-  } else if (content === 'bye') {
-    return message.reply('Goodbye! See you later! 👋');
-  } else if (content === 'dee myre') {
-    return message.reply('podaa pundachi mone👊');
-  }
+  // Simple replies
+  if (content === 'hi') return message.reply('Hello🥰!');
+  if (content === 'help') return message.reply('⚠️ ATTENTION @everyone this guy need help from you! 🧑‍✈️');
+  if (content === 'bye') return message.reply('Goodbye! See you later! 👋');
+  if (content === 'dee myre') return message.reply('podaa pundachi mone👊');
 
-  // Time-based greetings logic
-  if (content.includes('good morning') || content.includes('good evening') || content.includes('good night')) {
+  // Time-based greeting replies
+  if (
+    content.includes('good morning') ||
+    content.includes('good afternoon') ||
+    content.includes('good evening') ||
+    content.includes('good night')
+  ) {
     const now = new Date();
-    // Kerala (IST) offset: UTC +5:30
     const istOffset = 5.5 * 60 * 60 * 1000;
     const istTime = new Date(now.getTime() + istOffset);
     const hour = istTime.getUTCHours();
@@ -52,22 +51,19 @@ client.on('messageCreate', async message => {
     let reply = null;
 
     if (content.includes('good morning')) {
-      if (hour >= 0 && hour < 12) reply = 'Good morning';
-      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+      reply = (hour >= 0 && hour < 12) ? 'Good morning' : "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+    } else if (content.includes('good afternoon')) {
+      reply = (hour >= 12 && hour < 16) ? 'Good afternoon' : "Sorry, I'm from Kerala, and this is not the exact time to say that.";
     } else if (content.includes('good evening')) {
-      if (hour >= 12 && hour < 19) reply = 'Good evening';
-      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+      reply = (hour >= 16 && hour < 19) ? 'Good evening' : "Sorry, I'm from Kerala, and this is not the exact time to say that.";
     } else if (content.includes('good night')) {
-      if (hour >= 19 && hour <= 23) reply = 'Good night';
-      else reply = "Sorry, I'm from Kerala, and this is not the exact time to say that.";
+      reply = (hour >= 19 && hour <= 23) ? 'Good night' : "Sorry, I'm from Kerala, and this is not the exact time to say that.";
     }
 
-    if (reply) {
-      return message.reply(reply);
-    }
+    if (reply) return message.reply(reply);
   }
 
-  // Clear command
+  // Delete command
   if (message.content.startsWith('Delete')) {
     const ownerId = '1354501822429265921';
     if (message.author.id !== ownerId) {
@@ -75,9 +71,7 @@ client.on('messageCreate', async message => {
     }
 
     const user = message.mentions.users.first();
-    if (!user) {
-      return message.reply('Please mention a user to delete their messages.');
-    }
+    if (!user) return message.reply('Please mention a user to delete their messages.');
 
     try {
       const messages = await message.channel.messages.fetch({ limit: 100 });
