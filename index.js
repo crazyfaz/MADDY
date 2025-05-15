@@ -5,28 +5,45 @@ app.get('/', (req, res) => res.send('Bot is running!'));
 app.listen(3000, () => console.log('Keep-alive server started on port 3000'));
 
 require('dotenv').config();
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers // Required for welcome messages
   ]
 });
 
-// Target channel ID where the bot will listen/respond
+// Target channel for commands
 const TARGET_CHANNEL_ID = '1367900838307303577';
+// Welcome channel
+const WELCOME_CHANNEL_ID = '1367915867085606955';
 
 client.once('ready', () => {
   console.log(`Logged in as Ｍ ΛＤＤƳ 亗#${client.user.discriminator}`);
 });
 
+// Welcome message for new members
+client.on('guildMemberAdd', member => {
+  const welcomeChannel = member.guild.channels.cache.get(WELCOME_CHANNEL_ID);
+  if (!welcomeChannel) return;
+
+  const embed = new EmbedBuilder()
+    .setTitle(`Yooo welcome ${member.user.username}!`)
+    .setDescription(`Welcome <@${member.id}> into the creator crew server...😍♥️\nWe will always be with you babyyyy😉😅`)
+    .setImage('https://i.postimg.cc/kgnb24R4/IMG-20250515-092414.jpg')
+    .setColor('Random');
+
+  welcomeChannel.send({ embeds: [embed] });
+});
+
 client.on('messageCreate', async message => {
   if (message.author.bot) return;
 
-  // Only respond in target channel
-  if (message.channel.id !== TARGET_CHANNEL_ID) return;
+  // Ignore messages in welcome channel
+  if (message.channel.id !== TARGET_CHANNEL_ID || message.channel.id === WELCOME_CHANNEL_ID) return;
 
   const content = message.content.toLowerCase();
 
@@ -36,7 +53,7 @@ client.on('messageCreate', async message => {
   if (content === 'bye') return message.reply('Goodbye! See you later! 👋');
   if (content === 'dee myre') return message.reply('podaa pundachi mone👊');
 
-  // Time-based greeting replies
+  // Time-based greetings
   if (
     content.includes('good morning') ||
     content.includes('good afternoon') ||
@@ -87,6 +104,7 @@ client.on('messageCreate', async message => {
 
 client.login(process.env.TOKEN);
 
+// Keep-alive HTTP server for Replit
 const http = require('http');
 http.createServer((req, res) => {
   res.write('Bot is running!');
