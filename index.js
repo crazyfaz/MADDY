@@ -25,7 +25,7 @@ client.once('ready', () => {
 
 client.removeAllListeners('messageCreate');
 client.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
+  // Allow bot messages (removed: if (message.author.bot) return;)
 
   // Restrict to your specific channel ONLY on your server
   if (message.guild?.id === '1367900836801286244') {
