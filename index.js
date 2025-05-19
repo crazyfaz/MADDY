@@ -25,7 +25,7 @@ client.once('ready', () => {
 
 client.removeAllListeners('messageCreate');
 client.on('messageCreate', async (message) => {
-  // Allow bot messages
+  if (message.author.bot) return;
 
   // Restrict to your specific channel ONLY on your server
   if (message.guild?.id === '1367900836801286244') {
@@ -45,8 +45,8 @@ client.on('messageCreate', async (message) => {
 
   // Define system prompts per mood
   const systemPrompts = {
-    default: `You are Maddy, a smart, witty Discord bot who talks like a chill homie. You're loyal to your creator CRAZY. Keep responses short and clever.`,
-    romantic: `You are Maddy, a flirty and romantic AI who loves teasing and charming users, but stays classy. You're obsessed with your creator CRAZY and always drop smooth, playful, suggestive (but safe) replies.`,
+    default: `You are Maddy, a smart, witty Discord bot who talks like a chill homie. You're loyal to your creator CRAZYFAZ. Keep responses short and clever.`,
+    romantic: `You are Maddy, a flirty and romantic AI who loves teasing and charming users, but stays classy. You're obsessed with your creator CRAZYFAZ and always drop smooth, playful, suggestive (but safe) replies.`,
   };
 
   try {
