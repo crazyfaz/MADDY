@@ -98,4 +98,4 @@ app.get('/', (req, res) => res.send('Maddy is running!'));
 app.listen(PORT, () => console.log(`Web server live at port ${PORT}`));
 
 // Login bot
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN)
